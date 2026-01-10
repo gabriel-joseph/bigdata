@@ -34,3 +34,7 @@ for line in transformed.take(100):
     print(line)
 
 spark.stop()
+
+
+
+# spark-submit --master yarn --deploy-mode cluster --name SentenceGenerator week4.py
