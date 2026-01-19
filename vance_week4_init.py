@@ -1,5 +1,6 @@
-from pyspark.sql import SparkSession
 import random
+
+from pyspark.sql import SparkSession
 
 # Start Spark
 spark = SparkSession.builder.appName("SentenceGenerator").getOrCreate()
@@ -23,8 +24,8 @@ sentences_rdd = sc.parallelize(sentences)
 transformed = sentences_rdd.map(
     lambda s: (
         s,
-        len(s.replace(".", "").split()),                 # total words
-        len(set(s.replace(".", "").split()))             # unique words
+        len(s.replace(".", "").split()),  # total words
+        len(set(s.replace(".", "").split())),  # unique words
     )
 )
 
@@ -33,8 +34,8 @@ transformed = sentences_rdd.map(
 for line in transformed.take(100):
     print(line)
 
+# Save to HDFS (change the path to something you have write access to)
+output_path = "hdfs:///tmp/week4_output"
+transformed.saveAsTextFile(output_path)
+
 spark.stop()
-
-
-
-# spark-submit --master yarn --deploy-mode cluster --name SentenceGenerator week4.py
