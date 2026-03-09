@@ -81,4 +81,4 @@ def write_partition(partition):
 
 spark.sparkContext.parallelize(rows, 1).foreachPartition(write_partition)
 
-spark.stop()spark.stop()
+spark.stop()
